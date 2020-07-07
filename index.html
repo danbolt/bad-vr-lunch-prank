@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+	<head>
+		<title>【﻿Ｂｕｒｇｅｒ　Ｚｏｎｅ　ＶＲ】</title>
+
+		<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+		<script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+		<script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
+		<script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+
+		<script type="text/javascript" src="script/main.js"></script>
+
+		<script type="text/javascript">
+			AFRAME.registerComponent('log', {
+			  schema: {type: 'string'},
+			  init: function () {
+			  	var sceneEl = document.querySelector('a-scene');
+
+				for (var i = 0; i < 128; i++) {
+			  		const starfieldRadius = 10 + (Math.random() * 5);
+				    let x = (Math.random() * 2 - 1.0) + 0.0001;
+				    let y = (Math.random() * 2 - 1.0) + 0.0001;
+				    let z = (Math.random() * 2 - 1.0) + 0.0001;
+				    const normalizeFactor = 1.0 / Math.sqrt((x*x) + (y*y) + (z*z));
+				    x *= normalizeFactor * starfieldRadius;
+				    y *= normalizeFactor * starfieldRadius;
+				    z *= normalizeFactor * starfieldRadius;
+				    const stringPos = x.toString() + ' ' + y.toString() + ' ' + z.toString();
+
+				    var entityEl = document.createElement('a-entity');
+					entityEl.setAttribute('geometry', 'primitive:plane; width: 1; height: 1;');
+					entityEl.setAttribute('material', 'shader:gif;src:url(image/burger.gif); transparent: true;');
+					entityEl.setAttribute('gif', '');
+					entityEl.setAttribute('position', stringPos);
+					entityEl.setAttribute('look-at', '[camera]')
+					sceneEl.appendChild(entityEl);
+				}
+
+			  }
+			});
+		</script>
+	</head>
+
+	<body>
+		<a-scene log="Hello, Scene!">
+			<a-assets>
+			    <img id="sky" src="image/marble.jpg">
+			    <img id="burger" src="image/burger.gif">
+
+			    <audio id="shoppe" src="bgm/shoppe.ogg"></audio>
+			  </a-assets>
+			<a-entity position="4 4 -7" color="#000000" anchor="center" align="center" animation="property: scale; to: 17 17 17; dur 2000; easing: linear; loop: true;" scale="15 15 15" rotation="0 0 15" text="value: welcome to the Burger Zone;">
+			</a-entity>
+
+			
+			<a-sky src="#sky"></a-sky>
+
+			<a-sound src="#shoppe" autoplay="true" position="0 0 0"></a-sound>
+		</a-scene>
+
+		
+	</body>
+</html>
